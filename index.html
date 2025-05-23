@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Cool Auth Pages - Login, Sign Up, Forgot Password</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    color: #fff;
+  }
+
+  .container {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(12px);
+    border-radius: 15px;
+    padding: 40px 60px;
+    width: 360px;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    position: relative;
+  }
+
+  h2 {
+    margin-bottom: 25px;
+    font-weight: 600;
+    font-size: 28px;
+    letter-spacing: 1px;
+    text-align: center;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .input-group {
+    margin-bottom: 25px;
+    position: relative;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+    user-select: none;
+    color: #e0e0e0;
+  }
+
+  input {
+    width: 100%;
+    padding: 12px 15px;
+    border-radius: 8px;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    background: rgba(255, 255, 255, 0.25);
+    color: #fff;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: inset 2px 2px 6px rgba(255,255,255,0.3),
+      inset -2px -2px 6px rgba(0,0,0,0.2);
+  }
+
+  input::placeholder {
+    color: #d3d3d3;
+  }
+
+  input:focus {
+    background-color: rgba(255, 255, 255, 0.5);
+    box-shadow: 0 0 8px 2px rgba(118, 75, 162, 0.7);
+    color: #2b2b2b;
+  }
+
+  .btn-primary {
+    padding: 14px 0;
+    background: #764ba2;
+    border: none;
+    border-radius: 10px;
+    font-size: 18px;
+    font-weight: 600;
+    color: #fff;
+    cursor: pointer;
+    letter-spacing: 1.2px;
+    box-shadow: 0 7px 20px -5px #764ba2;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+
+  .btn-primary:hover {
+    background-color: #8a62bd;
+    transform: scale(1.05);
+  }
+
+  .btn-primary:active {
+    transform: scale(0.98);
+  }
+
+  .link-group {
+    margin-top: 15px;
+    font-size: 14px;
+    text-align: center;
+    color: #d3d3d3;
+    user-select: none;
+  }
+
+  .link-group a {
+    color: #bca0dc;
+    text-decoration: none;
+    cursor: pointer;
+    transition: color 0.3s ease;
+  }
+
+  .link-group a:hover {
+    color: #fff;
+    text-decoration: underline;
+  }
+
+  /* Hide all pages by default */
+  .auth-page {
+    display: none;
+  }
+
+  /* Show the active page */
+  .auth-page.active {
+    display: block;
+  }
+
+  @media (max-width: 420px) {
+    .container {
+      width: 90vw;
+      padding: 30px 25px;
+    }
+  }
+</style>
+</head>
+<body>
+  <main class="container" role="main" aria-live="polite">
+    <!-- Login Page -->
+    <section id="loginPage" class="auth-page active" aria-label="Login form">
+      <h2>Sign In</h2>
+      <form id="loginForm" onsubmit="return handleLogin(event)" novalidate>
+        <div class="input-group">
+          <label for="loginUsername">Username</label>
+          <input type="text" id="loginUsername" name="username" placeholder="Your username" required autocomplete="username" />
+        </div>
+        <div class="input-group">
+          <label for="loginPassword">Password</label>
+          <input type="password" id="loginPassword" name="password" placeholder="••••••••" required autocomplete="current-password" />
+        </div>
+        <button type="submit" class="btn-primary">Login</button>
+      </form>
+      <div class="link-group">
+        <a href="#" onclick="showPage('forgotPasswordPage'); return false;" tabindex="0" aria-label="Go to forgot password page">Forgot password?</a> | 
+        <a href="#" onclick="showPage('signUpPage'); return false;" tabindex="0" aria-label="Go to sign up page">Sign Up</a>
+      </div>
+    </section>
+
+    <!-- Sign Up Page -->
+    <section id="signUpPage" class="auth-page" aria-label="Sign up form">
+      <h2>Create Account</h2>
+      <form id="signUpForm" onsubmit="return handleSignUp(event)" novalidate>
+        <div class="input-group">
+          <label for="signUpUsername">Username</label>
+          <input type="text" id="signUpUsername" name="username" placeholder="Choose a username" required autocomplete="username" />
+        </div>
+        <div class="input-group">
+          <label for="signUpEmail">Email</label>
+          <input type="email" id="signUpEmail" name="email" placeholder="you@example.com" required autocomplete="email" />
+        </div>
+        <div class="input-group">
+          <label for="signUpPassword">Password</label>
+          <input type="password" id="signUpPassword" name="password" placeholder="Create a password" required autocomplete="new-password" />
+        </div>
+        <button type="submit" class="btn-primary">Sign Up</button>
+      </form>
+      <div class="link-group">
+        <a href="#" onclick="showPage('loginPage'); return false;" tabindex="0" aria-label="Back to login page">Back to Login</a>
+      </div>
+    </section>
+
+    <!-- Forgot Password Page -->
+    <section id="forgotPasswordPage" class="auth-page" aria-label="Forgot password form">
+      <h2>Reset Password</h2>
+      <form id="forgotPasswordForm" onsubmit="return handleForgotPassword(event)" novalidate>
+        <div class="input-group">
+          <label for="forgotEmail">Registered Email</label>
+          <input type="email" id="forgotEmail" name="email" placeholder="you@example.com" required autocomplete="email" />
+        </div>
+        <button type="submit" class="btn-primary">Send Reset Link</button>
+      </form>
+      <div class="link-group">
+        <a href="#" onclick="showPage('loginPage'); return false;" tabindex="0" aria-label="Back to login page">Back to Login</a>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    function showPage(pageId) {
+      const pages = document.querySelectorAll('.auth-page');
+      pages.forEach(page => {
+        if (page.id === pageId) {
+          page.classList.add('active');
+        } else {
+          page.classList.remove('active');
+        }
+      });
+      // Set focus on first input of the new page for accessibility
+      const firstInput = document.querySelector('#' + pageId + ' input');
+      if (firstInput) {
+        firstInput.focus();
+      }
+    }
+
+    function handleLogin(event) {
+      event.preventDefault();
+      const username = document.getElementById('loginUsername').value.trim();
+      const password = document.getElementById('loginPassword').value.trim();
+
+      if (!username || !password) {
+        alert('Please enter both username and password.');
+        return false;
+      }
+
+      // Demo only: show success alert
+      alert(`Welcome back, ${username}!`);
+      return true;
+    }
+
+    function handleSignUp(event) {
+      event.preventDefault();
+      const username = document.getElementById('signUpUsername').value.trim();
+      const email = document.getElementById('signUpEmail').value.trim();
+      const password = document.getElementById('signUpPassword').value.trim();
+
+      if (!username || !email || !password) {
+        alert('Please fill out all fields.');
+        return false;
+      }
+
+      if (!validateEmail(email)) {
+        alert('Please enter a valid email address.');
+        return false;
+      }
+
+      // Demo only: show success alert
+      alert(`Thank you for signing up, ${username}!`);
+      showPage('loginPage'); // Redirect to login on sign up success
+      return true;
+    }
+
+    function handleForgotPassword(event) {
+      event.preventDefault();
+      const email = document.getElementById('forgotEmail').value.trim();
+
+      if (!email) {
+        alert('Please enter your registered email.');
+        return false;
+      }
+
+      if (!validateEmail(email)) {
+        alert('Please enter a valid email address.');
+        return false;
+      }
+
+      // Demo only: show success alert
+      alert(`A password reset link has been sent to ${email}.`);
+      showPage('loginPage'); // Redirect back to login
+      return true;
+    }
+
+    function validateEmail(email) {
+      // Basic email regex pattern
+      const re = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;
+      return re.test(email);
+    }
+  </script>
+</body>
+</html>
+
+
